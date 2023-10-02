@@ -8,6 +8,7 @@ import ModelEliments.Camera;
 import ModelEliments.Flash;
 import ModelEliments.PoligonalModel;
 import ModelEliments.Scene;
+import ModelEliments.Texture;
 
 // создаем класс ModelStore и имплементируем интерфейс iModelChanger
 public class ModelStore implements iModelChanger {
@@ -19,7 +20,7 @@ public class ModelStore implements iModelChanger {
     private iModelChangeObserver[] changeObservers; // [] - массив
 
     // создаем конструктор для отношения агрегации (незакрашенного ромбика)
-    public ModelStore(iModelChangeObserver[] changeObservers) {
+    public ModelStore(iModelChangeObserver[] changeObservers) throws Exception {
         this.changeObservers = changeObservers;
 
         // инициализируем
@@ -27,6 +28,13 @@ public class ModelStore implements iModelChanger {
         this.scenes = new ArrayList<Scene>();
         this.flashes = new ArrayList<Flash>();
         this.cameras = new ArrayList<Camera>();
+
+        // добавим по одному элементу
+        List<Texture> Textures = new ArrayList<>();
+        models.add(new PoligonalModel(Textures));
+        flashes.add(new Flash());
+        cameras.add(new Camera());
+        scenes.add(new Scene(0, models, flashes, cameras));
     }
 
     public Scene getScena(int id) // метод getScena с типом Scene принимает id и возвращает scenes.get(i)
